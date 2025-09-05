@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environment
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+pip-wheel-metadata/
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+static/
+*.pid
+
+
+# Unit test / coverage reports
+.coverage
+*.cover
+*.py,cover
+htmlcov/
+.tox/
+.nox/
+.cache/
+pytest_cache/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# dotenv
+.env
+.env.*
+!.env.example
