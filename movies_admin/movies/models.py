@@ -32,6 +32,18 @@ class Genre(UUIDMixin, TimeStampedMixin):
         verbose_name_plural = "Жанры"
 
 
+class Person(UUIDMixin, TimeStampedMixin):
+    full_name = models.CharField("full_name", max_length=255, blank=False)
+
+    def __str__(self):
+        return self.full_name
+
+    class Meta:
+        db_table = "content\".\"person"  # fmt: skip
+        verbose_name = "Персона"
+        verbose_name_plural = "Персоны"
+
+
 class FilmWork(UUIDMixin, TimeStampedMixin):
     class FilmType(models.TextChoices):
         MOVIE = "movie"
@@ -47,6 +59,7 @@ class FilmWork(UUIDMixin, TimeStampedMixin):
     )
     type = models.CharField("type", choices=FilmType.choices)  # type: ignore
     genres = models.ManyToManyField(Genre, through="GenreFilmWork")
+    persons = models.ManyToManyField(Person, through="PersonFilmWork")
 
     def __str__(self):
         return self.title
@@ -55,6 +68,16 @@ class FilmWork(UUIDMixin, TimeStampedMixin):
         db_table = "content\".\"film_work"  # fmt: skip
         verbose_name = "Кинопроизведение"
         verbose_name_plural = "Кинопроизведения"
+
+
+class PersonFilmWork(UUIDMixin):
+    person = models.ForeignKey("Person", on_delete=models.CASCADE)
+    film_work = models.ForeignKey("FilmWork", on_delete=models.CASCADE)
+    role = models.CharField("role", max_length=255)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "content\".\"person_film_work"  # fmt: skip
 
 
 class GenreFilmWork(UUIDMixin):
