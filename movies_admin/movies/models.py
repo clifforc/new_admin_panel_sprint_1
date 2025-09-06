@@ -6,8 +6,8 @@ from django.utils.translation import gettext_lazy as _
 
 
 class TimeStampedMixin(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(_("created"), auto_now_add=True)
+    modified = models.DateTimeField(_("modified"), auto_now=True)
 
     class Meta:
         abstract = True
@@ -26,8 +26,8 @@ class UUIDMixin(models.Model):
 
 
 class Genre(UUIDMixin, TimeStampedMixin):
-    name = models.CharField("name", max_length=255)
-    description = models.TextField("description", blank=True)
+    name = models.CharField(_("name"), max_length=255)
+    description = models.TextField(_("description"), blank=True)
 
     def __str__(self):
         return self.name
@@ -43,7 +43,7 @@ class Genre(UUIDMixin, TimeStampedMixin):
 
 
 class Person(UUIDMixin, TimeStampedMixin):
-    full_name = models.CharField("full_name", max_length=255, blank=False)
+    full_name = models.CharField(_("full_name"), max_length=255, blank=False)
 
     def __str__(self):
         return self.full_name
@@ -59,15 +59,15 @@ class Person(UUIDMixin, TimeStampedMixin):
 
 
 class FilmWork(UUIDMixin, TimeStampedMixin):
-    title = models.CharField("title", blank=False, max_length=255)
-    description = models.TextField("description", blank=True)
-    creation_date = models.DateField("creation_date", blank=False)
+    title = models.CharField(_("title"), blank=False, max_length=255)
+    description = models.TextField(_("description"), blank=True)
+    creation_date = models.DateField(_("creation_date"), blank=False)
     rating = models.FloatField(
-        "rating",
+        _("rating"),
         blank=True,
         validators=[MinValueValidator(0.0), MaxValueValidator(10.0)],
     )
-    type = models.CharField("type", choices=FilmType.choices)  # type: ignore
+    type = models.CharField(_("type"), choices=FilmType.choices)  # type: ignore
     genres = models.ManyToManyField(Genre, through="GenreFilmWork")
     persons = models.ManyToManyField(Person, through="PersonFilmWork")
 
@@ -89,7 +89,7 @@ class FilmWork(UUIDMixin, TimeStampedMixin):
 class PersonFilmWork(UUIDMixin):
     person = models.ForeignKey("Person", on_delete=models.CASCADE)
     film_work = models.ForeignKey("FilmWork", on_delete=models.CASCADE)
-    role = models.CharField("role", max_length=255)
+    role = models.CharField(_("role"), max_length=255)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -14,6 +14,8 @@ DEBUG = os.environ.get("DEBUG", False)
 
 ALLOWED_HOSTS = ["127.0.0.1"]
 
+LOCALE_PATHS = ["movies/locale"]
+
 include(
     "components/application_definition.py",
     "components/database.py",
