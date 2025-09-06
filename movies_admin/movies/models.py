@@ -36,7 +36,7 @@ class Genre(UUIDMixin, TimeStampedMixin):
         db_table = "content\".\"genre"  # fmt: skip
         verbose_name = "Жанр"
         verbose_name_plural = "Жанры"
-
+        ordering = ["-name"]
         indexes = [
             models.Index(fields=["name"], name="genre_name_idx"),
         ]
@@ -52,7 +52,7 @@ class Person(UUIDMixin, TimeStampedMixin):
         db_table = "content\".\"person"  # fmt: skip
         verbose_name = "Персона"
         verbose_name_plural = "Персоны"
-
+        ordering = ["-full_name"]
         indexes = [
             models.Index(fields=["full_name"], name="person_full_name_idx"),
         ]
@@ -78,7 +78,7 @@ class FilmWork(UUIDMixin, TimeStampedMixin):
         db_table = "content\".\"film_work"  # fmt: skip
         verbose_name = "Кинопроизведение"
         verbose_name_plural = "Кинопроизведения"
-
+        ordering = ["-title"]
         indexes = [
             models.Index(fields=["creation_date"], name="film_work_creation_date_idx"),
             models.Index(fields=["title"], name="film_work_title_idx"),
