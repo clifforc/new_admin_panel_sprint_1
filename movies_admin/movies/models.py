@@ -2,6 +2,7 @@ import uuid
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class TimeStampedMixin(models.Model):
@@ -10,6 +11,11 @@ class TimeStampedMixin(models.Model):
 
     class Meta:
         abstract = True
+
+
+class FilmType(models.TextChoices):
+    MOVIE = "movie", _("movie")
+    TV_SHOW = "tv_show", _("tv_show")
 
 
 class UUIDMixin(models.Model):
@@ -31,6 +37,10 @@ class Genre(UUIDMixin, TimeStampedMixin):
         verbose_name = "Жанр"
         verbose_name_plural = "Жанры"
 
+        indexes = [
+            models.Index(fields=["name"], name="genre_name_idx"),
+        ]
+
 
 class Person(UUIDMixin, TimeStampedMixin):
     full_name = models.CharField("full_name", max_length=255, blank=False)
@@ -43,12 +53,12 @@ class Person(UUIDMixin, TimeStampedMixin):
         verbose_name = "Персона"
         verbose_name_plural = "Персоны"
 
+        indexes = [
+            models.Index(fields=["full_name"], name="person_full_name_idx"),
+        ]
+
 
 class FilmWork(UUIDMixin, TimeStampedMixin):
-    class FilmType(models.TextChoices):
-        MOVIE = "movie"
-        TV_SHOW = "tv_show"
-
     title = models.CharField("title", blank=False, max_length=255)
     description = models.TextField("description", blank=True)
     creation_date = models.DateField("creation_date", blank=False)
@@ -69,6 +79,12 @@ class FilmWork(UUIDMixin, TimeStampedMixin):
         verbose_name = "Кинопроизведение"
         verbose_name_plural = "Кинопроизведения"
 
+        indexes = [
+            models.Index(fields=["creation_date"], name="film_work_creation_date_idx"),
+            models.Index(fields=["title"], name="film_work_title_idx"),
+            models.Index(fields=["rating"], name="film_work_rating_idx"),
+        ]
+
 
 class PersonFilmWork(UUIDMixin):
     person = models.ForeignKey("Person", on_delete=models.CASCADE)
@@ -79,6 +95,13 @@ class PersonFilmWork(UUIDMixin):
     class Meta:
         db_table = "content\".\"person_film_work"  # fmt: skip
 
+        constraints = [
+            models.UniqueConstraint(
+                fields=["person", "film_work", "role"],
+                name="uq_person_film_role",
+            )
+        ]
+
 
 class GenreFilmWork(UUIDMixin):
     genre = models.ForeignKey("Genre", on_delete=models.CASCADE)
@@ -87,3 +110,10 @@ class GenreFilmWork(UUIDMixin):
 
     class Meta:
         db_table = "content\".\"genre_film_work"  # fmt: skip
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["genre", "film_work"],
+                name="uk_genre_film",
+            )
+        ]
