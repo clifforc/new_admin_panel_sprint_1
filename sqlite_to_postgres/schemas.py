@@ -27,11 +27,11 @@ class FilmType(StrEnum):
 @dataclass
 class FilmWork(BaseUUID, BaseTimeStamped):
     title: str
-    creation_date: date
     rating: float
     type: FilmType
     file_path: str | None = None
     description: str | None = None
+    creation_date: date | None = None
 
 
 @dataclass(slots=True)

@@ -25,10 +25,9 @@ class SQLiteLoader:
         self.connection.row_factory = Row
 
     def load_movies(self):
-        movies: dict[str, list] = {}
+        movies: dict[str, Generator] = {}
         for table, model in TABLE_MODEL_MAP.items():
-            gen = self._transform_data(self.connection.cursor(), table, model)
-            movies[table] = [item for batch in gen for item in batch]
+            movies[table] = self._transform_data(self.connection.cursor(), table, model)
         return movies
 
     def _extract_data(

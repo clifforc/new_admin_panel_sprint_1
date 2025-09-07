@@ -27,7 +27,7 @@ class UUIDMixin(models.Model):
 
 class Genre(UUIDMixin, TimeStampedMixin):
     name = models.CharField(_("name"), max_length=255)
-    description = models.TextField(_("description"), blank=True)
+    description = models.TextField(_("description"), blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -60,15 +60,16 @@ class Person(UUIDMixin, TimeStampedMixin):
 
 class FilmWork(UUIDMixin, TimeStampedMixin):
     title = models.CharField(_("title"), blank=False, max_length=255)
-    description = models.TextField(_("description"), blank=True)
-    creation_date = models.DateField(_("creation_date"), blank=False)
+    description = models.TextField(_("description"), null=True, blank=True)
+    creation_date = models.DateField(_("creation_date"), null=True, blank=True)
     rating = models.FloatField(
         _("rating"),
+        null=True,
         blank=True,
         validators=[MinValueValidator(0.0), MaxValueValidator(10.0)],
     )
     type = models.CharField(_("type"), choices=FilmType.choices)  # type: ignore
-    file_path = models.TextField(_("file_path"), blank=True)
+    file_path = models.TextField(_("file_path"), null=True, blank=True)
     genres = models.ManyToManyField(Genre, through="GenreFilmWork")
     persons = models.ManyToManyField(Person, through="PersonFilmWork")
 
