@@ -68,6 +68,7 @@ class FilmWork(UUIDMixin, TimeStampedMixin):
         validators=[MinValueValidator(0.0), MaxValueValidator(10.0)],
     )
     type = models.CharField(_("type"), choices=FilmType.choices)  # type: ignore
+    file_path = models.TextField(_("file_path"), blank=True)
     genres = models.ManyToManyField(Genre, through="GenreFilmWork")
     persons = models.ManyToManyField(Person, through="PersonFilmWork")
 

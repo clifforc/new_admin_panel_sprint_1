@@ -15,8 +15,8 @@ class BaseUUID:
 
 @dataclass
 class BaseTimeStamped:
-    created: datetime
-    modified: datetime
+    created_at: datetime
+    updated_at: datetime
 
 
 class FilmType(StrEnum):
@@ -30,18 +30,13 @@ class FilmWork(BaseUUID, BaseTimeStamped):
     creation_date: date
     rating: float
     type: FilmType
+    file_path: str | None = None
     description: str | None = None
-
-    def __post_init__(self):
-        super().__post_init__()
 
 
 @dataclass(slots=True)
 class Person(BaseUUID, BaseTimeStamped):
     full_name: str
-
-    def __post_init__(self):
-        super().__post_init__()
 
 
 @dataclass(slots=True)
@@ -49,26 +44,17 @@ class Genre(BaseUUID, BaseTimeStamped):
     name: str
     description: str | None = None
 
-    def __post_init__(self):
-        super().__post_init__()
-
 
 @dataclass(slots=True)
 class PersonFilmWork(BaseUUID):
     person_id: UUID
     film_work_id: UUID
     role: str
-    created: datetime
-
-    def __post_init__(self):
-        super().__post_init__()
+    created_at: datetime
 
 
 @dataclass(slots=True)
 class GenreFilmWork(BaseUUID):
     genre_id: UUID
     film_work_id: UUID
-    created: datetime
-
-    def __post_init__(self):
-        super().__post_init__()
+    created_at: datetime
