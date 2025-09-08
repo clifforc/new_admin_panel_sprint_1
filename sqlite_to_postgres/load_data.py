@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 from sqlite_to_postgres.postgres_saver import PostgresSaver
 from sqlite_to_postgres.sqlite_loader import SQLiteLoader
+from sqlite_to_postgres.tests.check_consistency import test_transfer
 
 load_dotenv()
 
@@ -37,3 +38,4 @@ if __name__ == "__main__":
         ) as pg_conn,
     ):
         load_from_sqlite(sqlite_conn, pg_conn)
+        test_transfer(sqlite_conn, pg_conn)
