@@ -82,7 +82,9 @@ class FilmWork(UUIDMixin, TimeStampedMixin):
         verbose_name_plural = _("Кинопроизведения")
         ordering = ["-title"]
         indexes = [
-            models.Index(fields=["creation_date"], name="film_work_creation_date_idx"),
+            models.Index(
+                fields=["creation_date"], name="film_work_creation_date_idx"
+            ),
             models.Index(fields=["title"], name="film_work_title_idx"),
             models.Index(fields=["rating"], name="film_work_rating_idx"),
         ]

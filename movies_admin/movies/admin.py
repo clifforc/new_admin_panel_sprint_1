@@ -27,6 +27,13 @@ class PersonAdmin(admin.ModelAdmin):
 class FilmWorkAdmin(admin.ModelAdmin):
     inlines = (GenreFilmWorkInline, PersonFilmWorkInline)
 
-    list_display = ("title", "type", "creation_date", "rating", "created", "modified")
+    list_display = (
+        "title",
+        "type",
+        "creation_date",
+        "rating",
+        "created",
+        "modified",
+    )
     list_filter = ("type",)
     search_fields = ("title", "description", "id")

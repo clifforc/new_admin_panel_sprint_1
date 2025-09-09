@@ -25,10 +25,12 @@ class SQLiteLoader:
         self.sqlite_cursor = sqlite_cursor
         self.sqlite_cursor.row_factory = Row
 
-    def load_movies(self):
-        movies: dict[str, Generator] = {}
+    def load_movies(self) -> dict[str, Generator[list[object], None, None]]:
+        movies: dict[str, Generator[list[object], None, None]] = {}
         for table, model in TABLE_MODEL_MAP.items():
-            movies[table] = self._transform_data(self.sqlite_cursor, table, model)
+            movies[table] = self._transform_data(
+                self.sqlite_cursor, table, model
+            )
         return movies
 
     def _extract_data(

@@ -15,7 +15,9 @@ from sqlite_to_postgres.utills import open_db
 load_dotenv()
 
 
-def load_from_sqlite(sqlite_cursor: sqlite3.Cursor, pg_conn: psycopg.Connection):
+def load_from_sqlite(
+    sqlite_cursor: sqlite3.Cursor, pg_conn: psycopg.Connection
+):
     """Основной метод загрузки данных из SQLite в Postgres"""
     postgres_saver = PostgresSaver(pg_conn)
     sqlite_loader = SQLiteLoader(sqlite_cursor)

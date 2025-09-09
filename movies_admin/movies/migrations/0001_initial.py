@@ -18,11 +18,15 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "created",
-                    models.DateTimeField(auto_now_add=True, verbose_name="created"),
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="created"
+                    ),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(auto_now=True, verbose_name="modified"),
+                    models.DateTimeField(
+                        auto_now=True, verbose_name="modified"
+                    ),
                 ),
                 (
                     "id",
@@ -33,10 +37,15 @@ class Migration(migrations.Migration):
                         serialize=False,
                     ),
                 ),
-                ("title", models.CharField(max_length=255, verbose_name="title")),
+                (
+                    "title",
+                    models.CharField(max_length=255, verbose_name="title"),
+                ),
                 (
                     "description",
-                    models.TextField(blank=True, null=True, verbose_name="description"),
+                    models.TextField(
+                        blank=True, null=True, verbose_name="description"
+                    ),
                 ),
                 (
                     "creation_date",
@@ -65,7 +74,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "file_path",
-                    models.TextField(blank=True, null=True, verbose_name="file_path"),
+                    models.TextField(
+                        blank=True, null=True, verbose_name="file_path"
+                    ),
                 ),
             ],
             options={
@@ -80,11 +91,15 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "created",
-                    models.DateTimeField(auto_now_add=True, verbose_name="created"),
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="created"
+                    ),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(auto_now=True, verbose_name="modified"),
+                    models.DateTimeField(
+                        auto_now=True, verbose_name="modified"
+                    ),
                 ),
                 (
                     "id",
@@ -95,10 +110,15 @@ class Migration(migrations.Migration):
                         serialize=False,
                     ),
                 ),
-                ("name", models.CharField(max_length=255, verbose_name="name")),
+                (
+                    "name",
+                    models.CharField(max_length=255, verbose_name="name"),
+                ),
                 (
                     "description",
-                    models.TextField(blank=True, null=True, verbose_name="description"),
+                    models.TextField(
+                        blank=True, null=True, verbose_name="description"
+                    ),
                 ),
             ],
             options={
@@ -131,11 +151,15 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "created",
-                    models.DateTimeField(auto_now_add=True, verbose_name="created"),
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="created"
+                    ),
                 ),
                 (
                     "modified",
-                    models.DateTimeField(auto_now=True, verbose_name="modified"),
+                    models.DateTimeField(
+                        auto_now=True, verbose_name="modified"
+                    ),
                 ),
                 (
                     "id",
@@ -170,7 +194,10 @@ class Migration(migrations.Migration):
                         serialize=False,
                     ),
                 ),
-                ("role", models.CharField(max_length=255, verbose_name="role")),
+                (
+                    "role",
+                    models.CharField(max_length=255, verbose_name="role"),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 (
                     "film_work",
@@ -182,7 +209,8 @@ class Migration(migrations.Migration):
                 (
                     "person",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="movies.person"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="movies.person",
                     ),
                 ),
             ],
@@ -192,13 +220,16 @@ class Migration(migrations.Migration):
         ),
         migrations.AddIndex(
             model_name="person",
-            index=models.Index(fields=["full_name"], name="person_full_name_idx"),
+            index=models.Index(
+                fields=["full_name"], name="person_full_name_idx"
+            ),
         ),
         migrations.AddField(
             model_name="genrefilmwork",
             name="film_work",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="movies.filmwork"
+                on_delete=django.db.models.deletion.CASCADE,
+                to="movies.filmwork",
             ),
         ),
         migrations.AddField(
@@ -229,7 +260,8 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="personfilmwork",
             constraint=models.UniqueConstraint(
-                fields=("person", "film_work", "role"), name="uq_person_film_role"
+                fields=("person", "film_work", "role"),
+                name="uq_person_film_role",
             ),
         ),
         migrations.AddConstraint(

@@ -32,11 +32,14 @@ def test_transfer(sqlite_cursor: sqlite3.Cursor, pg_conn: psycopg.Connection):
 
         while batch := sqlite_cursor.fetchmany(BATCH_SIZE):
             original_row_batch = [
-                {k: normalize_record(v) for k, v in dict(row).items()} for row in batch
+                {k: normalize_record(v) for k, v in dict(row).items()}
+                for row in batch
             ]
             ids = [row["id"] for row in original_row_batch]
 
-            pg_cursor.execute(f"SELECT * FROM {table} WHERE id = ANY(%s)", [ids])
+            pg_cursor.execute(
+                f"SELECT * FROM {table} WHERE id = ANY(%s)", [ids]
+            )
             transferred_row_batch = [
                 {alias.get(k, k): v for k, v in row.items()}
                 for row in pg_cursor.fetchall()
