@@ -24,9 +24,8 @@ def normalize_record(s):
             return s
 
 
-def test_transfer(sqlite_conn: sqlite3.Connection, pg_conn: psycopg.Connection):
+def test_transfer(sqlite_cursor: sqlite3.Cursor, pg_conn: psycopg.Connection):
     for table, model in TABLE_MODEL_MAP.items():
-        sqlite_cursor = sqlite_conn.cursor()
         pg_cursor = pg_conn.cursor()
 
         sqlite_cursor.execute(f"SELECT * FROM {table}")

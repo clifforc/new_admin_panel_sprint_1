@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import datetime, date
+from datetime import date, datetime
 from enum import StrEnum
 from uuid import UUID
 

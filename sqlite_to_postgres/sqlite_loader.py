@@ -1,13 +1,14 @@
 from collections.abc import Generator
-from sqlite3 import Connection, Cursor, Row
+from sqlite3 import Cursor, Row
 
 from sqlite_to_postgres.schemas import (
     FilmWork,
     Genre,
-    Person,
     GenreFilmWork,
+    Person,
     PersonFilmWork,
 )
+
 
 BATCH_SIZE = 100
 TABLE_MODEL_MAP = {
@@ -20,14 +21,14 @@ TABLE_MODEL_MAP = {
 
 
 class SQLiteLoader:
-    def __init__(self, connection: Connection):
-        self.connection = connection
-        self.connection.row_factory = Row
+    def __init__(self, sqlite_cursor: Cursor):
+        self.sqlite_cursor = sqlite_cursor
+        self.sqlite_cursor.row_factory = Row
 
     def load_movies(self):
         movies: dict[str, Generator] = {}
         for table, model in TABLE_MODEL_MAP.items():
-            movies[table] = self._transform_data(self.connection.cursor(), table, model)
+            movies[table] = self._transform_data(self.sqlite_cursor, table, model)
         return movies
 
     def _extract_data(
