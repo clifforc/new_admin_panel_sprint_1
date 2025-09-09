@@ -34,8 +34,8 @@ class Genre(UUIDMixin, TimeStampedMixin):
 
     class Meta:
         db_table = "content\".\"genre"  # fmt: skip
-        verbose_name = "Жанр"
-        verbose_name_plural = "Жанры"
+        verbose_name = _("Жанр")
+        verbose_name_plural = _("Жанры")
         ordering = ["-name"]
         indexes = [
             models.Index(fields=["name"], name="genre_name_idx"),
@@ -50,8 +50,8 @@ class Person(UUIDMixin, TimeStampedMixin):
 
     class Meta:
         db_table = "content\".\"person"  # fmt: skip
-        verbose_name = "Персона"
-        verbose_name_plural = "Персоны"
+        verbose_name = _("Персона")
+        verbose_name_plural = _("Персоны")
         ordering = ["-full_name"]
         indexes = [
             models.Index(fields=["full_name"], name="person_full_name_idx"),
@@ -78,8 +78,8 @@ class FilmWork(UUIDMixin, TimeStampedMixin):
 
     class Meta:
         db_table = "content\".\"film_work"  # fmt: skip
-        verbose_name = "Кинопроизведение"
-        verbose_name_plural = "Кинопроизведения"
+        verbose_name = _("Кинопроизведение")
+        verbose_name_plural = _("Кинопроизведения")
         ordering = ["-title"]
         indexes = [
             models.Index(fields=["creation_date"], name="film_work_creation_date_idx"),
@@ -89,8 +89,8 @@ class FilmWork(UUIDMixin, TimeStampedMixin):
 
 
 class PersonFilmWork(UUIDMixin):
-    person = models.ForeignKey("Person", on_delete=models.CASCADE)
-    film_work = models.ForeignKey("FilmWork", on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    film_work = models.ForeignKey(FilmWork, on_delete=models.CASCADE)
     role = models.CharField(_("role"), max_length=255)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -106,8 +106,8 @@ class PersonFilmWork(UUIDMixin):
 
 
 class GenreFilmWork(UUIDMixin):
-    genre = models.ForeignKey("Genre", on_delete=models.CASCADE)
-    film_work = models.ForeignKey("FilmWork", on_delete=models.CASCADE)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    film_work = models.ForeignKey(FilmWork, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
