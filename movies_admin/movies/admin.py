@@ -34,6 +34,23 @@ class FilmWorkAdmin(admin.ModelAdmin):
         "rating",
         "created",
         "modified",
+        "get_genres",
     )
+    list_prefetch_related = ("genres",)
+
+    def get_queryset(self, request):
+        queryset = (
+            super()
+            .get_queryset(request)
+            .prefetch_related(*self.list_prefetch_related)
+        )
+        return queryset
+
+    def get_genres(self, obj):
+        return ",".join([genre.name for genre in obj.genres.all()])
+
+    get_genres.short_description = "Жанры фильма"
+
     list_filter = ("type",)
     search_fields = ("title", "description", "id")
+    autocomplete_fields = ("persons",)
